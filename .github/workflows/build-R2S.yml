@@ -32,6 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
+  FORCE_UNSAFE_CONFIGURE=1
 
 jobs:
   build:
