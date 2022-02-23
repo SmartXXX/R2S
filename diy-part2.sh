@@ -16,6 +16,7 @@ sed -i '/uci commit system/i\uci set system.@system[0].hostname='SmartR2S'' pack
 sed -i "s/OpenWrt /Smart R2S /g" package/lean/default-settings/files/zzz-default-settings
 
 # Add luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf package/lean/luci-theme-argon
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/lean/luci-app-argon-config
