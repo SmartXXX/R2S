@@ -15,6 +15,9 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='SmartR2S'' package/lean/default-settings/files/zzz-default-settings
 sed -i "s/OpenWrt /Smart R2S /g" package/lean/default-settings/files/zzz-default-settings
 
+# Add firewall rules
+echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> package/network/config/firewall/files/firewall.user
+
 # Add luci-app-oled (R2S Only)
 git clone --depth=1 https://github.com/NateLol/luci-app-oled package/lean/luci-app-oled
 
