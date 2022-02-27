@@ -10,10 +10,23 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
+# swap the network adapter driver to r8168 to gain better performance for r4s
+sed -i 's/r8169/r8168/' target/linux/rockchip/image/armv8.mk
+
+# Modify config
+sed -i 's,-mcpu=generic,-mcpu=cortex-a53+crypto,g' include/target.mk
+sed -i "s/CONFIG_DEFAULT_TARGET_OPTIMIZATION=\"-Os -pipe -mcpu=cortex-a53\"/CONFIG_DEFAULT_TARGET_OPTIMIZATION=\"-O3 -pipe -march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53\"/" .config
+
+# Fix libssh
+pushd feeds/packages/libs
+rm -rf libssh
+svn co https://github.com/openwrt/packages/trunk/libs/libssh
+popd
+
 # Modify default IP & hostname
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='SmartR2S'' package/lean/default-settings/files/zzz-default-settings
-sed -i "s/OpenWrt /Smart R2S /g" package/lean/default-settings/files/zzz-default-settings
+sed -i 's/OpenWrt /SmartR2S /g' package/lean/default-settings/files/zzz-default-settings
 
 # Add firewall rules
 echo 'iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE' >> package/network/config/firewall/files/firewall.user
