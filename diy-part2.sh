@@ -10,6 +10,8 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
+chmod -R 755 files
+
 # swap the network adapter driver to r8168 to gain better performance for r4s
 sed -i 's/r8169/r8168/' target/linux/rockchip/image/armv8.mk
 
